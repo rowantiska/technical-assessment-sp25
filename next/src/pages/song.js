@@ -49,7 +49,7 @@ export default function Song({songData}) {
         <p className='text-3xl md:m-20 m-10 md:mt-10'>Daily Songs</p>
         <div className='flex justify-center flex-wrap'>
             {songData.map((song, index) => (
-                <div className='w-96 h-96 rounded-md m-10 mt-0 mb-0 p-6 bg-[#1F1F1F]'>
+                <div className='w-96 h-96 md:mt-0 mt-10 rounded-md m-10 mb-0 p-6 bg-[#1F1F1F]'>
                     <div className='flex justify-center'>
                         <img className='min-w-40 max-h-40 m-6 rounded-md' src={song.header_image_thumbnail_url}></img>
                     </div>
