@@ -32,6 +32,31 @@ app.post('/comments', async (req, res) => {
     }
 });
 
+//For date/song data
+app.get('/appdata', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM songData ORDER BY date DESC');
+        res.status(200).json(result.rows);
+        console.log(result.rows)
+    } catch (error) {
+        console.error(error);
+    }
+});
+//For date/song data
+app.post('/appdata', async (req, res) => {
+    console.log('Request Body:', req.body.songsofday);
+    const songsOfDay = req.body.songsofday;
+    try {
+        const result = await pool.query(
+            'INSERT INTO songdata (songsOfDay) VALUES ($1)',
+            [JSON.stringify(songsOfDay)]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

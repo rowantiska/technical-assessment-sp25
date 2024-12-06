@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState } from 'react'
-import Comments from './comments'
 
 export default function board() {
   const [username, setUsername] = useState("")
@@ -14,28 +13,28 @@ export default function board() {
   const getCommentInput = (event) => {
     setComment(event.target.value);
   };
-  
-  const handleRemount = () => {
-    setKey(key+1);
-  };
 
   const postData = () => {
-    try{
-      fetch('http://localhost:8080/comments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: username,
-          comment: comment
+    if(username.length != 0 & comment.length !=0){ // Make sure both feilds are valid (not empty)
+      try{
+        fetch('http://localhost:8080/comments', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: username,
+            comment: comment
+          })
         })
-      })
-      console.log("Posted data successfully")
-      handleRemount()
+        console.log("Posted data successfully")
+      }
+      catch(e){
+        console.log("Error "+e)
+      }
     }
-    catch(e){
-      console.log("Error "+e)
+    else{
+      console.log("All feilds required")
     }
   }
 
@@ -48,9 +47,6 @@ export default function board() {
               <input onChange={getUsernameInput} placeholder='Username (posted to community)' className='mt-6 bg-[#1F1F1F] border border-[#929292] p-4 rounded-md w-full'></input>
               <textarea onChange={getCommentInput} placeholder='Post your thoughts on this weeks songs' className="mt-3 bg-[#1F1F1F] border border-[#929292] p-4 resize-none rounded-md w-full"></textarea>
               <button onClick={postData} className='mt-3 text-[#000] bg-[#1BD760] pr-6 pl-6 p-3 rounded-lg'>Post</button>
-          </div>
-          <div className='mt-10 h-96 overflow-scroll'>
-            <Comments key={key}/>
           </div>
       </div>
     </div>
