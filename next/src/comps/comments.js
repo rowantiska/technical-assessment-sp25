@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 export default function comments(props) {
     const [allComments, setallComments] = useState([])
-    const currentDate = props.date // get date from main page so we can change it when needed...
+    const currentDate = String(props.date).substring(0,10)
 
     useEffect(() => {
     const getData = async () => {
@@ -33,7 +33,7 @@ export default function comments(props) {
     <div>
       {allComments.map((comment, index) => (
           <div key={index}>
-              <div className='w-full bg-[#1F1F1F] border border-[#929292] mt-2 p-6 rounded-md'>
+              <div className={props.archived ? "w-full bg-[#1F1F1F] border border-[#929292] mt-2 p-2 rounded-md" : "w-full bg-[#1F1F1F] border border-[#929292] mt-2 p-6 rounded-md"}>
                 <p className='text-sm text-[#929292] text-right'>ID: {comment.id}</p>
                 <p>Posted by <span className='font-semibold'>{comment.username}</span> at <span>{comment.created_at}</span></p>
                 <p className='text-sm text-[#929292] mt-2'>Comment</p>

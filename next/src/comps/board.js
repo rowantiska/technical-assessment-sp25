@@ -1,10 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
+import Comments from './comments.js'
 
-export default function board() {
+export default function board(props) {
   const [username, setUsername] = useState("")
   const [comment, setComment] = useState("")
-  const [key, setKey] = useState(0);
+  const [update, setUpdate] = useState(0);
+  const currentDate = props.date // get date from main page so we can change it when needed...
 
   const getUsernameInput = (event) => {
     setUsername(event.target.value);
@@ -28,6 +30,7 @@ export default function board() {
           })
         })
         console.log("Posted data successfully")
+        setUpdate(update+1) //Force remount of "comments"
       }
       catch(e){
         console.log("Error "+e)
@@ -40,6 +43,7 @@ export default function board() {
 
 
   return (
+    <div>
     <div className='m-10 mt-0 flex justify-center md:m-20'>
       <div className='w-full'>
         <p className='text-3xl'>Community Discussion</p>
@@ -49,6 +53,12 @@ export default function board() {
               <button onClick={postData} className='mt-3 text-[#000] bg-[#1BD760] pr-6 pl-6 p-3 rounded-lg'>Post</button>
           </div>
       </div>
+    </div>
+
+    <div className='md:m-20 m-10 h-96 overflow-scroll'>
+      <Comments date={currentDate} key={update}/>
+    </div>
+
     </div>
   )
 }

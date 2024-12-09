@@ -1,10 +1,9 @@
 import React from 'react';
-import { useRouter } from "next/router";
+import Link from 'next/link';
 import "../globals.css";
 import Board from '@/comps/board';
 import { FiPlayCircle } from "react-icons/fi";
 require('dotenv').config();
-import Comments from '@/comps/comments';
 const API_KEY = process.env.GENUIS_API;
 
 export async function getServerSideProps() {
@@ -19,14 +18,19 @@ export async function getServerSideProps() {
         },
     });
     const data = await response.json()
-    var currentDate = String(new Date().toISOString()).substring(0, 10)
     var songsFound = false
+
+    //time :///
+    const jsTime = new Date();
+    const jsTimeUTC = new Date(jsTime.toISOString()); 
+    const updatedTime = new Date(jsTimeUTC);
+    updatedTime.setUTCHours(jsTimeUTC.getUTCHours() + 5); 
+    const currentDate = String(updatedTime.toISOString()).substring(0,10)
 
 
 //Fetch songs based on date
 for (let i = 0; i < data.length; i++) {
     if(String(data[i].date).substring(0, 10) == currentDate){
-        console.log()
         songsFound = true
         songData = data[i].songsofday
         break;
@@ -66,12 +70,12 @@ if(songsFound == false){
         fetch('http://localhost:8080/appdata', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
             },
             body: JSON.stringify({
             songsofday: songData,
             })
-          })
+        })
         console.log("Posted new songs to DB successfully")
     }
     catch(e){
@@ -88,18 +92,13 @@ return {
 }
 
 export default function Song({songData, currentDate}) {
-    const router = useRouter();
-    const changeSongData = (newSong) => {
-        // Update the query parameter in the URL
-        router.push(`/?song=${newSong}`, undefined, { shallow: false });
-    };
 
 return (
     <div>
         <p className='text-3xl md:m-20 m-10 md:mt-10'>Daily Songs for {currentDate}</p>
         <div className='flex justify-center flex-wrap'>
             {songData.map((song, index) => (
-                <div className='w-96 h-96 md:mt-0 mt-10 rounded-md m-10 mb-0 p-6 bg-[#1F1F1F]' key={index}>
+                <div className='w-96 h-96 md:mt-0 mt-10 rounded-md m-10 mb-0 p-6 bg-[#1F1F1F] border border-[#929292]' key={index}>
                     <div className='flex justify-center'>
                         <img className='min-w-40 max-h-40 m-6 rounded-md' src={song.image}></img>
                     </div>
@@ -109,13 +108,13 @@ return (
                 </div>
             ))}
         </div>
-            <div className='m-16 h-[1px] w-auto bg-[#1F1F1F]'></div>
+        <Link href={'/archived'}><button className='p-3 bg-[#929292] rounded-md m-16 mt-14'>View archived songs</button></Link>
+            <div className='m-16 mt-0 h-[1px] w-auto bg-[#1F1F1F]'></div>
+
         <div>
-            <Board/>
-            <div className='md:m-20 m-10 h-96 overflow-scroll'>
-                <Comments date={currentDate} key={currentDate}/>
-          </div>
+            <Board date={currentDate}/>
         </div>
+        
     </div>
 );
 }

@@ -1,0 +1,32 @@
+
+#import express> use require key word
+const express = require("express")
+const cors = require("cors")
+#Cross origin resource sharing!
+
+#env stuff/getting access to stuff inside file
+require('dotend).config()
+console.log(process.env.API_KEY)
+
+
+#define the app that will use express
+const app = use("express");
+const PORT = 8080;
+#use cors
+app.use(cors());
+
+app.get('/hello', async(res) =>{
+    console.log("hello world, welcome to my server")
+})
+
+app.listen(PORT, () =>{
+    console.log("Server is running on PORT"+port);
+})
+
+app.get("/comments", async(res) => {
+
+})
+
+const myFunc = () => {
+    console.log("Hello world")
+}
