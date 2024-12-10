@@ -2,17 +2,23 @@ import React from 'react'
 import "../globals.css";
 import { FiPlayCircle } from "react-icons/fi";
 import Comments from '@/comps/comments';
+import Link from 'next/link';
 
 export async function getServerSideProps() {
   //Get DB data
-  const response = await fetch('http://localhost:8080/appdata', {
+  try{
+    const response = await fetch('http://localhost:8080/appdata', {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json'
       },
   });
-  const data = await response.json()
-  var songData = data
+    const data = await response.json()
+    var songData = data
+  }
+  catch(e){
+    console.log("Erorr fetching comments "+e)
+  }
 
 return {
   props: {
@@ -24,6 +30,7 @@ return {
 export default function archived({songData}) {
   return (
     <div>
+        <Link href={'/'}><button className='p-3 m-4 border border-[#929292] rounded-md'>Return home</button></Link>
         <p className='text-3xl m-10'>Archived Songs</p>
         {songData.map((song, index) => (
           <div key={index} className='border border border-[#929292] rounded-md m-10'>
@@ -42,9 +49,8 @@ export default function archived({songData}) {
                       <p className='text-[#929292] truncate mt-1'>By {song.artist}</p>
                       <button className='mt-2 text-[#000] bg-[#1BD760] p-2 text-xl rounded-full flex items-center'><a href={song.link} target="_blank"><FiPlayCircle/></a></button>
                     </div>
-                    
+                  
                   </div>
-              
             </div>
           ))}
         </div>

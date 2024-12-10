@@ -5,8 +5,9 @@ export default function page() {
 
   return (
     <div>
-      <Link href="/song"><p className='text-3xl m-10 md:m-20 md:mt-10'>Today's Song</p></Link>
-      <Link href="/archived"><p className='text-3xl m-10 md:m-20 md:mt-10'>Archived Song</p></Link>
+      <Link href="/song"><button className='p-3 border border-[#929292] rounded-md text-xl m-10'>Today's Song</button></Link>
+      <br></br>
+      <Link href="/archived"><button className='p-3 border border-[#929292] rounded-md text-xl m-10 mt-0'>Archived Song</button></Link>
     </div>
   )
 }

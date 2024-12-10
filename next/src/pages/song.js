@@ -9,34 +9,34 @@ const API_KEY = process.env.GENUIS_API;
 export async function getServerSideProps() {
 
     var songData = []
-
-    //Get DB data
-    const response = await fetch('http://localhost:8080/appdata', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    });
-    const data = await response.json()
     var songsFound = false
-
     //time :///
     const jsTime = new Date();
     const jsTimeUTC = new Date(jsTime.toISOString()); 
     const updatedTime = new Date(jsTimeUTC);
     updatedTime.setUTCHours(jsTimeUTC.getUTCHours() + 5); 
     const currentDate = String(updatedTime.toISOString()).substring(0,10)
-
-
-//Fetch songs based on date
-for (let i = 0; i < data.length; i++) {
-    if(String(data[i].date).substring(0, 10) == currentDate){
-        songsFound = true
-        songData = data[i].songsofday
-        break;
+    //Get DB data
+    try{
+        const response = await fetch('http://localhost:8080/appdata', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const data = await response.json()
+    //fetch songs based on date
+        for (let i = 0; i < data.length; i++) {
+            if(String(data[i].date).substring(0, 10) == currentDate){
+                songsFound = true
+                songData = data[i].songsofday
+                break;
+            }
+        }
     }
-}
-
+    catch(e){
+        console.log("Eror fetching songs/finding old songs "+e)   
+    }
 
 if(songsFound == false){
     while(songData.length < 3) {
@@ -64,7 +64,7 @@ if(songsFound == false){
     }
 }
 
-// Post new songs to DB only if date not found
+//Post new songs to DB only if date not found
 if(songsFound == false){
     try{
         fetch('http://localhost:8080/appdata', {
@@ -92,9 +92,9 @@ return {
 }
 
 export default function Song({songData, currentDate}) {
-
 return (
     <div>
+        <Link href={'/'}><button className='p-3 m-4 border border-[#929292] rounded-md'>Return home</button></Link>
         <p className='text-3xl md:m-20 m-10 md:mt-10'>Daily Songs for {currentDate}</p>
         <div className='flex justify-center flex-wrap'>
             {songData.map((song, index) => (
@@ -108,13 +108,10 @@ return (
                 </div>
             ))}
         </div>
-        <Link href={'/archived'}><button className='p-3 bg-[#929292] rounded-md m-16 mt-14'>View archived songs</button></Link>
-            <div className='m-16 mt-0 h-[1px] w-auto bg-[#1F1F1F]'></div>
-
+            <div className='m-20 h-[1px] w-auto bg-[#1F1F1F]'></div>
         <div>
             <Board date={currentDate}/>
         </div>
-        
     </div>
 );
 }
