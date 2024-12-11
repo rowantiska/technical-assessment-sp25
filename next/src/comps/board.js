@@ -55,7 +55,7 @@ export default function board(props) {
       </div>
     </div>
 
-    <div className='md:m-20 m-10 h-96 overflow-scroll'>
+    <div>
       <Comments date={currentDate} key={update}/>
     </div>
 

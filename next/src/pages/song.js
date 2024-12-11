@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import "../globals.css";
 import Board from '@/comps/board';
+import Archive from '@/comps/archive';
 import { FiPlayCircle } from "react-icons/fi";
 require('dotenv').config();
 const API_KEY = process.env.GENUIS_API;
@@ -94,7 +95,6 @@ return {
 export default function Song({songData, currentDate}) {
 return (
     <div>
-        <Link href={'/'}><button className='p-3 m-4 border border-[#929292] rounded-md'>Return home</button></Link>
         <p className='text-3xl md:m-20 m-10 md:mt-10'>Daily Songs for {currentDate}</p>
         <div className='flex justify-center flex-wrap'>
             {songData.map((song, index) => (
@@ -108,7 +108,11 @@ return (
                 </div>
             ))}
         </div>
-            <div className='m-20 h-[1px] w-auto bg-[#1F1F1F]'></div>
+
+        <div>
+            <Archive date={currentDate}/>
+        </div>
+        <div className='m-20 mt-0 h-[1px] w-auto bg-[#1F1F1F]'></div>
         <div>
             <Board date={currentDate}/>
         </div>
