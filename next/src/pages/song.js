@@ -9,14 +9,14 @@ const API_KEY = process.env.GENUIS_API;
 
 export async function getServerSideProps() {
 
-    var songData = []
-    var songsFound = false
+    var songData = [];
+    var songsFound = false;
     //time :///
     const jsTime = new Date();
     const jsTimeUTC = new Date(jsTime.toISOString()); 
     const updatedTime = new Date(jsTimeUTC);
     updatedTime.setUTCHours(jsTimeUTC.getUTCHours() + 5); 
-    const currentDate = String(updatedTime.toISOString()).substring(0,10)
+    const currentDate = String(updatedTime.toISOString()).substring(0,10);
     //Get DB data
     try{
         const response = await fetch('http://localhost:8080/appdata', {
@@ -25,7 +25,7 @@ export async function getServerSideProps() {
                 'Content-Type': 'application/json'
             },
         });
-        const data = await response.json()
+        const data = await response.json();
     //fetch songs based on date
         for (let i = 0; i < data.length; i++) {
             if(String(data[i].date).substring(0, 10) == currentDate){
@@ -36,7 +36,7 @@ export async function getServerSideProps() {
         }
     }
     catch(e){
-        console.log("Eror fetching songs/finding old songs "+e)   
+        console.log("Eror fetching songs/finding old songs "+e);
     }
 
 if(songsFound == false){
@@ -60,7 +60,7 @@ if(songsFound == false){
             }
         }
         catch(e){
-            console.log("Error with random song id, finding another...")
+            console.log("Error with random song id, finding another...");
         }
     }
 }
@@ -77,10 +77,10 @@ if(songsFound == false){
             songsofday: songData,
             })
         })
-        console.log("Posted new songs to DB successfully")
+        console.log("Posted new songs to DB successfully");
     }
     catch(e){
-        console.log("Could not post new songs to DB "+e)
+        console.log("Could not post new songs to DB "+e);
     } 
 }
 
@@ -95,10 +95,18 @@ return {
 export default function Song({songData, currentDate}) {
 return (
     <div>
-        <p className='text-3xl md:m-20 m-10 md:mt-10'>Daily Songs for {currentDate}</p>
+        <div className='flex justify-center items-center'>
+            <div className='w-1/2 flex justify-start'>
+                <p className='text-3xl md:m-20 m-10'>Daily Songs for {currentDate}</p>
+
+            </div>
+            <div className='w-1/2 flex justify-end'>
+                <Archive date={currentDate}/>
+            </div>
+        </div>
         <div className='flex justify-center flex-wrap'>
             {songData.map((song, index) => (
-                <div className='w-96 h-96 md:mt-0 mt-10 rounded-md m-10 mb-0 p-6 bg-[#1F1F1F] border border-[#929292]' key={index}>
+                <div className='w-96 h-96 md:mt-6 mt-10 m-10 mb-0 p-6 rounded-md bg-[#1F1F1F] border border-[#929292]' key={index}>
                     <div className='flex justify-center'>
                         <img className='min-w-40 max-h-40 m-6 rounded-md' src={song.image}></img>
                     </div>
@@ -109,10 +117,7 @@ return (
             ))}
         </div>
 
-        <div>
-            <Archive date={currentDate}/>
-        </div>
-        <div className='m-20 mt-0 h-[1px] w-auto bg-[#1F1F1F]'></div>
+        <div className='m-20 h-[1px] w-auto bg-[#1F1F1F]'></div>
         <div>
             <Board date={currentDate}/>
         </div>

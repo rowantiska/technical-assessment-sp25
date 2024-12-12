@@ -2,9 +2,9 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 
 export default function comments(props) {
-    const [allComments, setallComments] = useState([])
-    const [comments, setComments] = useState(false)
-    const currentDate = String(props.date).substring(0,10)
+    const [allComments, setallComments] = useState([]);
+    const [comments, setComments] = useState(false);
+    const currentDate = String(props.date).substring(0,10);
 
     useEffect(() => {
     const getData = async () => {
@@ -20,12 +20,12 @@ export default function comments(props) {
             const dailyComments = data.filter(item =>
               String(item.created_at).substring(0, 10) === currentDate
             )
-            setallComments(dailyComments)
-            setComments(true)
+            setallComments(dailyComments);
+            setComments(true);
           })
         }
         catch(e){
-          console.log("Error "+e)
+          console.log("Error "+e);
         }
       }
         getData();
@@ -37,9 +37,15 @@ export default function comments(props) {
       allComments.map((comment, index) => (
           <div key={index}>
               <div className={props.archived ? "w-full bg-[#1F1F1F] border border-[#929292] mt-2 p-2 rounded-md" : "w-full bg-[#1F1F1F] border border-[#929292] mt-2 p-6 rounded-md"}>
-                <p className='text-sm text-[#929292] text-right'>ID: {comment.id}</p>
-                <p>Posted by <span className='font-semibold'>{comment.username}</span> at <span>{comment.created_at}</span></p>
-                <p className='text-sm text-[#929292] mt-2'>Comment</p>
+                <div className='flex'>
+                  <div className='w-4/5 flex justify-start'>
+                    <p>Posted by <span className='font-semibold'>{comment.username}</span> at <span>{comment.created_at.substring(0,16)}</span></p>
+                  </div>
+                  <div className='w-1/5 flex justify-end'>
+                    <p className='text-sm text-[#929292]'>ID: {comment.id}</p>
+                  </div>
+                </div>
+                <p className='text-sm text-[#929292] mt-2'>Comment:</p>
                 <p className='mt-1 text-lg'>{comment.comment}</p>
               </div>
           </div>
@@ -47,7 +53,6 @@ export default function comments(props) {
         : (
           <p className='text-center text-xl'>No comments for today</p>
         )}
-     
     </div>
   )
 }

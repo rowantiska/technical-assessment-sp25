@@ -5,8 +5,8 @@ import Comments from './comments';
 export default function Archive() {
     const [prevSongs, setPrevSongs] = useState([]); // List of all songs
     const [songOfDay, setSongOfDay] = useState([]); // Single song toggle
-    const [modal, setModal] = useState(false);
     const [day, setDay] = useState(1);
+    const [modal, setModal] = useState(false);
 
     // Fetch archived songs on mount
     useEffect(() => {
@@ -30,19 +30,11 @@ export default function Archive() {
     useEffect(() => {
     }, [songOfDay]);
 
-    // Toggle day logic
-    const toggleDay = () => {
-        if (day < prevSongs.length-1) {
-                setSongOfDay(prevSongs[day]); // Update the song of the day
-                console.log(songOfDay)
-                setDay(day + 1);
-        }
-    };
 
     const prevDay = () => {
-        if (day > 0) {
-                setDay(day - 1);
-                setSongOfDay(prevSongs[day]); // Update the song of the day
+        if (day <= prevSongs.length-1) {
+                setSongOfDay(prevSongs[day]);
+                setDay(day + 1);
         }
     };
 
@@ -57,19 +49,18 @@ export default function Archive() {
             </button>
             {modal && (
                 <div className="w-full h-full absolute top-0 left-0 right-0 bottom-0">
-                    <div className="bg-[#000] opacity-75 w-full h-full fixed top-0 left-0 right-0 bottom-0 z-3"></div>
-                    <div className="flex items-center mt-24 justify-center">
-                        <div className="bg-[#000] border border-[#929292] rounded-lg shadow-2xl z-10 w-[75%]">
+                    <div className="bg-[#000] opacity-60 w-full h-full fixed top-0 left-0 right-0 bottom-0 z-3"></div>
+                    <div className="flex items-center mt-10 justify-center">
+                        <div className="bg-[#000] border border-[#929292] rounded-lg shadow-2xl z-10 w-[90%] md:w-[75%]">
                             <div>
                                 <button onClick={toggleModal} className="m-4 text-2xl"><FiX /></button>
                                 <p className="text-3xl m-10 mt-0">Archived Songs</p>
-                                <button className='ml-10 m-3 text-2xl' onClick={toggleDay}><FiArrowLeft/></button>
-                                <button className='m-3 text-2xl' onClick={prevDay}><FiArrowRight/></button>
-                                <p className='m-10 text-xl mt-0 mb-6'>Showing songs from {songOfDay.date.substring(0,10)}</p>
+                                <button className='flex items-center text-xl m-10 mb-4 mt-0 p-3 border border-[#929292] rounded-md' onClick={prevDay}>Previous day<span className='ml-2 mt-[2px]'><FiArrowRight/></span></button>
+                                <p className='m-10 text-xl mt-6 mb-6'>Showing songs from {songOfDay.date.substring(0,10)}</p>
                                 <div className='flex justify-center flex-wrap mb-6'>
                                 {songOfDay ? (
                                 songOfDay.songsofday.map((song, index) => 
-                                    <div className='w-72 h-72 md:mt-0 mt-10 rounded-md m-10 mb-0 p-6 bg-[#1F1F1F] border border-[#929292]' key={index}>
+                                    <div className='w-72 h-72 md:mt-6 mt-10 rounded-md m-10 mb-0 p-6 bg-[#1F1F1F] border border-[#929292]' key={index}>
                                         <div className='flex justify-center'>
                                             <img className='min-w-32 max-h-32 m-2 rounded-md' src={song.image}></img>
                                         </div>
@@ -79,12 +70,12 @@ export default function Archive() {
                                     </div>
                                 )
                                 ) : (
-                                <p>No archived songs</p>
+                                <p>No archived songs for date range</p>
                                 )}
                                 </div>
+                                <div className='ml-20 mr-20 mt-10 h-[1px] w-auto bg-[#1F1F1F]'></div>
                                 <Comments date={songOfDay.date.substring(0,10)} key={songOfDay.date.substring(0,10)}/>
                             </div>
-                            <div className="overflow-scroll"></div>
                         </div>
                     </div>
                 </div>

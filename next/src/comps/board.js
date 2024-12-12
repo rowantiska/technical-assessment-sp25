@@ -3,10 +3,10 @@ import { useState } from 'react'
 import Comments from './comments.js'
 
 export default function board(props) {
-  const [username, setUsername] = useState("")
-  const [comment, setComment] = useState("")
+  const [username, setUsername] = useState("");
+  const [comment, setComment] = useState("");
   const [update, setUpdate] = useState(0);
-  const currentDate = props.date // get date from main page so we can change it when needed...
+  const currentDate = props.date; // get date from main page so we can change it when needed...
 
   const getUsernameInput = (event) => {
     setUsername(event.target.value);
@@ -29,15 +29,15 @@ export default function board(props) {
             comment: comment
           })
         })
-        console.log("Posted data successfully")
-        setUpdate(update+1) //Force remount of "comments"
+        console.log("Posted data successfully");
+        setUpdate(update+1); //Force remount of "comments"
       }
       catch(e){
-        console.log("Error "+e)
+        console.log("Error "+e);
       }
     }
     else{
-      console.log("All feilds required")
+      console.log("All feilds required");
     }
   }
 
