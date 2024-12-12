@@ -44,7 +44,7 @@ export default function board(props) {
 
   return (
     <div>
-    <div className='m-10 mt-0 flex justify-center md:m-20'>
+    <div className='m-10 mt-0 flex justify-center md:m-20 md:mt-10'>
       <div className='w-full'>
         <p className='text-3xl'>Community Discussion</p>
           <div>

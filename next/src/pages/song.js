@@ -94,10 +94,10 @@ return {
 
 export default function Song({songData, currentDate}) {
 return (
-    <div>
+    <div className='p-0 md:pt-0 md:p-24'>
         <div className='flex justify-center items-center'>
             <div className='w-1/2 flex justify-start'>
-                <p className='text-3xl md:m-20 m-10'>Daily Songs for {currentDate}</p>
+                <p className='text-3xl md:m-20 m-10 md:mt-10 md:mb-10'>Songs for {currentDate}</p>
 
             </div>
             <div className='w-1/2 flex justify-end'>
@@ -106,18 +106,18 @@ return (
         </div>
         <div className='flex justify-center flex-wrap'>
             {songData.map((song, index) => (
-                <div className='w-96 h-96 md:mt-6 mt-10 m-10 mb-0 p-6 rounded-md bg-[#1F1F1F] border border-[#929292]' key={index}>
+                <div className='w-96 h-96 m-6 mb-0 p-6 rounded-md bg-[#1F1F1F] border border-[#929292]' key={index}>
                     <div className='flex justify-center'>
-                        <img className='min-w-40 max-h-40 m-6 rounded-md' src={song.image}></img>
+                        <img className='min-w-44 max-h-44 m-6 mt-2 rounded-md' src={song.image}></img>
                     </div>
                     <p className='text-2xl font-medium h-10 truncate' key={index}>{song.title}</p>
                     <p className='text-[#929292] h-6 truncate'>By {song.artist}</p>
-                    <button className='mt-4 text-[#000] bg-[#1BD760] p-3 text-2xl rounded-full flex items-center'><a href={song.link} target="_blank"><FiPlayCircle/></a></button>
+                    <a href={song.link} target="_blank"><button className='mt-4 text-[#000] bg-[#1BD760] p-3 text-2xl rounded-full flex items-center'><FiPlayCircle/></button></a>
                 </div>
             ))}
         </div>
 
-        <div className='m-20 h-[1px] w-auto bg-[#1F1F1F]'></div>
+        <div className='m-10 h-[1px] w-auto bg-[#1F1F1F] md:m-20 md:mt-12 md:mb-12'></div>
         <div>
             <Board date={currentDate}/>
         </div>

@@ -44,7 +44,7 @@ export default function Archive() {
 
     return (
         <div>
-            <button onClick={toggleModal} className="p-3 border border-[#929292] rounded-md text-lg m-10 md:m-20">
+            <button onClick={toggleModal} className="p-3 border border-[#929292] rounded-md text-lg m-10 md:m-20 md:mt-10 md:mb-10">
                 View archived songs
             </button>
             {modal && (
@@ -54,19 +54,18 @@ export default function Archive() {
                         <div className="bg-[#000] border border-[#929292] rounded-lg shadow-2xl z-10 w-[90%] md:w-[75%]">
                             <div>
                                 <button onClick={toggleModal} className="m-4 text-2xl"><FiX /></button>
-                                <p className="text-3xl m-10 mt-0">Archived Songs</p>
-                                <button className='flex items-center text-xl m-10 mb-4 mt-0 p-3 border border-[#929292] rounded-md' onClick={prevDay}>Previous day<span className='ml-2 mt-[2px]'><FiArrowRight/></span></button>
-                                <p className='m-10 text-xl mt-6 mb-6'>Showing songs from {songOfDay.date.substring(0,10)}</p>
+                                <p className="text-3xl m-10 mt-0 mb-6">Archived Songs from {songOfDay.date.substring(0,10)}</p>
+                                <button className='flex items-center text-xl m-10 mt-0 p-3 border border-[#929292] rounded-md mb-2' onClick={prevDay}>Previous day<span className='ml-2 mt-[2px]'><FiArrowRight/></span></button>
                                 <div className='flex justify-center flex-wrap mb-6'>
                                 {songOfDay ? (
                                 songOfDay.songsofday.map((song, index) => 
-                                    <div className='w-72 h-72 md:mt-6 mt-10 rounded-md m-10 mb-0 p-6 bg-[#1F1F1F] border border-[#929292]' key={index}>
+                                    <div className='w-72 h-72 m-6 mb-0 p-6 rounded-md bg-[#1F1F1F] border border-[#929292]' key={index}>
                                         <div className='flex justify-center'>
                                             <img className='min-w-32 max-h-32 m-2 rounded-md' src={song.image}></img>
                                         </div>
                                         <p className='text-lg font-medium h-8 truncate' key={index}>{song.title}</p>
                                         <p className='text-[#929292] truncate'>By {song.artist}</p>
-                                        <button className='mt-2 text-[#000] bg-[#1BD760] p-2 text-xl rounded-full flex items-center'><a href={song.link} target="_blank"><FiPlayCircle/></a></button>
+                                        <a href={song.link} target="_blank"><button className='mt-2 text-[#000] bg-[#1BD760] p-2 text-xl rounded-full flex items-center'><FiPlayCircle/></button></a>
                                     </div>
                                 )
                                 ) : (

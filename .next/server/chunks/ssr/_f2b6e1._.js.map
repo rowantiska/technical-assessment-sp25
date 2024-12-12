@@ -1,9 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/rowantiska/Documents/CS%20Projects/dailysong/src/app/page.js"],"sourcesContent":["import React from 'react'\n\nexport default function page() {\n  fetch('https://api.genius.com/songs/378195', {\n    method: 'GET',\n    headers: {\n      'Authorization': 'Bearer zBLa6-8lpJshJ_tWuB6MHgw1ke6-JwR8UhISBjm5y3h1e5c4XbQUXD0NO9UBuFRX',\n    },\n  })\n    .then((res) => res.json())\n    .then((data) => {\n      console.log(data)\n    })\n\n  return (\n    <div>\n  \n    </div>\n  )\n}\n"],"names":[],"mappings":";;;;AAAA;;;AAEe,SAAS;IACtB,MAAM,uCAAuC;QAC3C,QAAQ;QACR,SAAS;YACP,iBAAiB;QACnB;IACF,GACG,IAAI,CAAC,CAAC,MAAQ,IAAI,IAAI,IACtB,IAAI,CAAC,CAAC;QACL,QAAQ,GAAG,CAAC;IACd;IAEF,qBACE,8OAAC;;;;;AAIL"}},
-    {"offset": {"line": 29, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
-    {"offset": {"line": 39, "column": 0}, "map": {"version":3,"sources":["file:///Users/rowantiska/Documents/CS%20Projects/dailysong/node_modules/next/src/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.ts"],"sourcesContent":["module.exports = require('../../module.compiled').vendored[\n  'react-ssr'\n].ReactJsxDevRuntime\n"],"names":["module","exports","require","vendored","ReactJsxDevRuntime"],"mappings":";AAAAA,OAAOC,OAAO,GAAGC,QAAQ,0HAAyBC,QAAQ,CACxD,YACD,CAACC,kBAAkB","ignoreList":[0]}},
-    {"offset": {"line": 41, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}
